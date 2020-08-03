@@ -14,6 +14,6 @@
 Route::get('/', function() {
     return view('welcome');
 });
-Route::get('/contact', function() {
-    return view('contact');
+Route::get('{path}', function($path) {
+    return view('contact', compact('path'));
 });

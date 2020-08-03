@@ -61,9 +61,19 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .current_page_item {background-color: blue;}
         </style>
     </head>
     <body>
+        <div id="menu">
+            <ul>
+                <li class="{{ Request::path() === '/' ? 'current_page_item' : '' }}"><a href="/">Homepage</a></li>
+                <li class="{{ Request::path() === 'clients' ? 'current_page_item' : '' }}"><a href="/clients">Our Clients</a></li>
+                <li class="{{ Request::is('aboud') ? 'current_page_item' : '' }}"><a href="/about">About Us</a></li>
+                <li class="{{ Request::path() === 'career' ? 'current_page_item' : '' }}"><a href="/career">Career</a></li>
+                <li class="{{ Request::path() === 'contact' ? 'current_page_item' : '' }}"><a href="/contact">Contact Us</a></li>
+            </ul>
+        </div>
         @yield('content')
     </body>
 </html>

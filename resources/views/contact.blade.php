@@ -1,5 +1,5 @@
 @extends('layout')
 
 @section('content')
-    <h1>Contact Page</h1>
+    <h1>{{ $path }} Page</h1>
 @endsection
