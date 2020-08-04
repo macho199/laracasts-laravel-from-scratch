@@ -14,6 +14,10 @@
 Route::get('/', function() {
     return view('welcome');
 });
-Route::get('{path}', function($path) {
-    return view('contact', compact('path'));
+Route::get('/articles', function() {
+    return view('articles', [
+        'articles' => App\Article::latest()->get()
+    ]);
 });
+
+Route::get('/articles/{article}', 'ArticlesController@show');
