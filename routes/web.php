@@ -14,10 +14,6 @@
 Route::get('/', function() {
     return view('welcome');
 });
-Route::get('/articles', function() {
-    return view('articles', [
-        'articles' => App\Article::latest()->get()
-    ]);
-});
 
+Route::get('/articles', 'ArticlesController@index');
 Route::get('/articles/{article}', 'ArticlesController@show');
