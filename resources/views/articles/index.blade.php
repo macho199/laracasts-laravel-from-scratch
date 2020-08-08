@@ -3,12 +3,13 @@
 @section('content')
     <h1>Articles Page</h1>
     <ul>
-        @foreach ($articles as $article)
+        @forelse ($articles as $article)
         <li>
-            
             <a href="{{ $article->path() }}">{{ $article->title }}</a><br>
             {{ $article->excerpt }}
         </li>
-        @endforeach
+        @empty
+        <li>empty list</li>
+        @endforelse
     </ul>
 @endsection
