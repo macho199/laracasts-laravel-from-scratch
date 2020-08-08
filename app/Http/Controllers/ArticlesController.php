@@ -27,36 +27,37 @@ class ArticlesController extends Controller
 
     public function create()
     {
-        return view('articles.create');
+        return view('articles.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     public function store()
     {
-        $validatedAttributes = request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
+        $article = new Article($this->articlesValidate());
+        $article->user_id = 1;
+        $article->save();
 
-        Article::create($validatedAttributes);
-
+        $article->tags()->attach(request('tags'));
+        
         return redirect(route('articles.index'));
     }
 
     public function edit(Article $article)
     {
-        return view('articles.edit', ['article' => $article]);
+        return view('articles.edit', [
+            'article' => $article,
+            'tags' => Tag::all()
+        ]);
     }
 
     public function update(Article $article)
     {
-        $validatedAttributes = request()->validate([
-            'title' => 'required',
-            'excerpt' => 'required',
-            'body' => 'required'
-        ]);
-
-        $article->update($validatedAttributes);
+        $articleValidated = $this->articlesValidate();
+        $article->update($articleValidated);
+        
+        $article->tags()->detach();
+        $article->tags()->attach($articleValidated["tags"]);
 
         return redirect(route('articles.show', $article));
     }
@@ -64,5 +65,15 @@ class ArticlesController extends Controller
     public function destroy()
     {
 
+    }
+
+    public function articlesValidate()
+    {
+        return request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required',
+            'tags' => 'exists:tags,id'
+        ]);
     }
 }

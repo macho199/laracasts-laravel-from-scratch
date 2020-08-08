@@ -32,6 +32,18 @@
                 </div>
             </div>
 
+            <div class="field">
+                <label class="label" for="tags">Tags</label>
+
+                <div class="control">
+                    <select name="tags[]" multiple>
+                        @foreach($tags as $tag)
+                            <option value="{{ $tag->id }}" @if($article->tags->where('id', $tag->id)->isNotEmpty()) selected @endif>{{ $tag->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             <div class="field is-grouped">
                 <div class="control">
                     <button class="button is-link" type="submit">Submit</button>
